@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<style>
+body {
+    background-color: #f7f7f7;
+    color: #002366;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    touch-action: manipulation; /* Improves touch responsiveness */
+}
+.container {
+    background: linear-gradient(to bottom, #f7f7f7, #ffff);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+
+h1, h2 {
+    color: #002366;
+    font-size: 1.4em;
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-size: 1em;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+
+input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+
+}
+
+input, select {
+    appearance: none;
+    -webkit-appearance: none; /* iOS e navegadores WebKit */
+    -moz-appearance: none;    /* Firefox */
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Removes spinners in WebKit browsers */
+    margin: 0;
+}
+
+#fator, #desconto-info {
+    font-size: 0.85em;
+    color: #444;
+    margin-top: 5px;
+}
+
+#resultado, #resultado-desconto {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #002366;
+    background-color: #ffdd00;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.btn {
+    background-color: #002366;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 12px;
+    margin-top: 15px;
+    touch-action: manipulation; /* Improves touch responsiveness */
+}
+
+.btn:hover {
+    background-color: #00194d;
+}
+
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-half {
+    flex: 1;
+}
+
+.link {
+    display: block;
+    margin-top: 30px;
+    color: #002366;
+    cursor: pointer;
+    touch-action: manipulation; /* Improves touch responsiveness */
+}
+
+#desconto-bloco {
+    display: none;
+    margin-top: 40px;
+}
+
+@media (min-width: 600px) {
+    body {
+    max-width: 420px;
+    margin: auto;
+    }
+}
+
+/* Ensure inputs are large enough for touch */
+@media (max-width: 599px) {
+    input, select, .btn {
+    font-size: 16px; /* Minimum touch target size */
+    }
+}
+
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    transition: border 0.3s, box-shadow 0.3s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+input:focus, select:focus, button:focus {
+    border-color: #0055cc;
+    box-shadow: 0 0 5px rgba(0, 85, 204, 0.3);
+    outline: none;
+}
+
+</style>
+</head>
+<body>
+<!-- BLOCO DE PARCELAMENTO -->
+<div class="container">
+    <div id="calculadora-bloco">
+    <h1>Calculadora de Parcelas 🏷️</h1>
+
+    <label for="valor">Valor Total (R$):</label>
+    <input type="number" id="valor" placeholder="Ex: 1000" step="0.01" min="0">
+
+    <label for="parcelas">Número de Parcelas:</label>
+    <select id="parcelas">
+        <option value="">Selecione</option>
+    </select>
+
+    <div id="fator"></div>
+    <div id="resultado"></div>
+
+    <div class="btn-group">
+        <button class="btn btn-half" onclick="limparParcelamento()">Limpar</button>
+        <button class="btn btn-half" onclick="calcularParcelamento()">Calcular</button>
+    </div>
+    <button class="btn" onclick="enviarWhatsAppParcelamento()">Enviar no WhatsApp</button>
+
+    <a class="link" onclick="mostrarDesconto()">➕ Calcular Desconto</a>
+    </div>
+
+    <!-- BLOCO DE DESCONTO -->
+    <div id="desconto-bloco">
+    <h2>Calculadora de Desconto 🤑</h2>
+
+    <label for="produto">Valor do Produto (R$):</label>
+    <input type="number" id="produto" placeholder="Ex: 800" step="0.01" min="0">
+
+    <label for="desconto">Desconto (%):</label>
+    <input type="number" id="desconto" placeholder="Ex: 10" step="0.01" min="0" max="100">
+
+    <div id="desconto-info"></div>
+    <div id="resultado-desconto"></div>
+
+    <div class="btn-group">
+        <button class="btn btn-half" onclick="limparDesconto()">Limpar</button>
+        <button class="btn btn-half" onclick="calcularDesconto()">Calcular</button>
+    </div>
+    <button class="btn" onclick="enviarWhatsAppDesconto()">Enviar no WhatsApp</button>
+
+    <a class="link" onclick="mostrarParcelas()">🔁 Voltar ao Cálculo de Parcelas</a>
+    </div>
+</div>
+</body>
+
+<script>
+// Fatores - Calculadora de Parcelas
+const fatores = {
+    "1": 1.070,
+    "2": 0.553,
+    "3": 0.381,
+    "4": 0.295,
+    "5": 0.244,
+    "6": 0.216,
+    "7": 0.192,
+    "8": 0.174,
+    "9": 0.160,
+    "10": 0.149,
+    "11": 0.140,
+    "12": 0.133
+};
+
+function preencherParcelas() {
+    const select = document.getElementById("parcelas");
+    select.innerHTML = '<option value="1">Selecione</option>';
+    Object.keys(fatores).forEach(p => {
+    const option = document.createElement("option");
+    option.value = p;
+    option.textContent = `${p}x`;
+    select.appendChild(option);
+    });
+}
+
+function calcularParcelamento() {
+    const valor = parseFloat(document.getElementById("valor").value);
+    const parcelas = document.getElementById("parcelas").value;
+    const fator = fatores[parcelas];
+
+    const elResultado = document.getElementById("resultado");
+    const elFator = document.getElementById("fator");
+
+    if (!valor || isNaN(valor) || valor <= 0 || !parcelas || !fator) {
+    limparResultadoParcelamento();
+    alert("Por favor, insira um valor válido e selecione o número de parcelas.");
+    return;
+    }
+
+    const parcela = (valor * fator).toFixed(2);
+    const total = (parcela * parcelas).toFixed(2); // Calculate total for clarity
+    const texto = `Parcela: ${parcelas}x de R$ ${parcela} `;
+
+    elResultado.innerText = texto;
+    elFator.innerText = `Fator usado: ${fator.toFixed(3)} Total: R$ ${total})`;
+    sessionStorage.setItem("resultado", texto);
+    sessionStorage.setItem("fator", fator.toFixed(3));
+}
+
+function limparResultadoParcelamento() {
+    document.getElementById("resultado").innerText = "";
+    document.getElementById("fator").innerText = "";
+    sessionStorage.removeItem("resultado");
+    sessionStorage.removeItem("fator");
+}
+
+function limparParcelamento() {
+    document.getElementById("valor").value = "";
+    document.getElementById("parcelas").value = "";
+    limparResultadoParcelamento();
+}
+
+function enviarWhatsAppParcelamento() {
+    const valor = parseFloat(document.getElementById("valor").value);
+    const parcelas = document.getElementById("parcelas").value;
+    const fator = fatores[parcelas];
+
+    if (!valor || isNaN(valor) || valor <= 0 || !parcelas || !fator) {
+    alert("Por favor, preencha os dados corretamente antes de enviar.");
+    return;
+    }
+
+    const parcela = (valor * fator).toFixed(2);
+    const total = (parcela * parcelas).toFixed(2);
+    const texto = `Olá! Sua Simulação de Parcelamento:\n\nValor: R$ ${valor.toFixed(2)}\nParcelas: ${parcelas}x de R$ ${parcela}\nTotal: R$ ${total}\n\nConsultora: *Marta Alves*`;
+    const numero = "5599992172611";
+    window.open(`https://wa.me/${numero}?text=${encodeURIComponent(texto)}`, "_blank");
+}
+
+function calcularDesconto() {
+    const produto = parseFloat(document.getElementById("produto").value);
+    const perc = parseFloat(document.getElementById("desconto").value);
+
+    const elResultado = document.getElementById("resultado-desconto");
+    const elInfo = document.getElementById("desconto-info");
+
+    if (!produto || isNaN(produto) || produto <= 0 || !perc || isNaN(perc) || perc < 0 || perc > 100) {
+    elResultado.innerText = "";
+    elInfo.innerText = "";
+    alert("Por favor, insira um valor de produto válido e um desconto entre 0% e 100%.");
+    return;
+    }
+
+    const valorDesconto = produto * (perc / 100);
+    const valorFinal = (produto - valorDesconto).toFixed(2);
+
+    elResultado.innerText = `Valor com desconto: R$ ${valorFinal}`;
+    elInfo.innerText = `Desconto aplicado: ${perc.toFixed(2)}% (R$ ${valorDesconto.toFixed(2)})`;
+    sessionStorage.setItem("resultado-desconto", `Valor com desconto: R$ ${valorFinal}`);
+    sessionStorage.setItem("desconto-info", `Desconto aplicado: ${perc.toFixed(2)}% (R$ ${valorDesconto.toFixed(2)})`);
+}
+
+function limparDesconto() {
+    document.getElementById("produto").value = "";
+    document.getElementById("desconto").value = "";
+    document.getElementById("resultado-desconto").innerText = "";
+    document.getElementById("desconto-info").innerText = "";
+    sessionStorage.removeItem("resultado-desconto");
+    sessionStorage.removeItem("desconto-info");
+}
+
+function enviarWhatsAppDesconto() {
+    const produto = parseFloat(document.getElementById("produto").value);
+    const perc = parseFloat(document.getElementById("desconto").value);
+
+    if (!produto || isNaN(produto) || produto <= 0 || !perc || isNaN(perc) || perc < 0 || perc > 100) {
+    alert("Por favor, preencha os dados corretamente antes de enviar.");
+    return;
+    }
+
+    const valorDesconto = (produto * perc / 100).toFixed(2);
+    const valorFinal = (produto - produto * perc / 100).toFixed(2);
+
+    const texto = `Simulação de Compra :\n\nValor original: R$ ${produto.toFixed(2)}\nDesconto: ${perc.toFixed(2)}%\nDesconto aplicado: R$ ${valorDesconto}\nValor final: R$ ${valorFinal}\n\nConsultora: *Marta Alves*`;
+    const numero = "5599992172611";
+    window.open(`https://wa.me/${numero}?text=${encodeURIComponent(texto)}`, "_blank");
+}
+function mostrarDesconto() {
+    document.getElementById("calculadora-bloco").style.display = "none"; // Oculta o bloco de parcelamento
+    document.getElementById("desconto-bloco").style.display = "block";
+    setTimeout(() => {
+        document.getElementById("desconto-bloco").scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+}
+
+function mostrarParcelas() {
+    document.getElementById("desconto-bloco").style.display = "none"; // Oculta o bloco de desconto
+    document.getElementById("calculadora-bloco").style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+window.onload = () => {
+    preencherParcelas();
+
+    const campos = ["valor", "parcelas"];
+    campos.forEach(id => {
+        const element = document.getElementById(id);
+        element.addEventListener("input", () => {
+            clearTimeout(element.debounceTimeout);
+            element.debounceTimeout = setTimeout(calcularParcelamento, 300);
+        });
+    });
+
+    const descontoCampos = ["produto", "desconto"];
+    descontoCampos.forEach(id => {
+        const element = document.getElementById(id);
+        element.addEventListener("input", () => {
+            clearTimeout(element.debounceTimeout);
+            element.debounceTimeout = setTimeout(calcularDesconto, 300);
+        });
+    });
+
+    const salvo = sessionStorage.getItem("resultado");
+    const fatorSalvo = sessionStorage.getItem("fator");
+    if (salvo) document.getElementById("resultado").innerText = salvo;
+    if (fatorSalvo) document.getElementById("fator").innerText = `Fator usado: ${fatorSalvo}`;
+
+    const descontoSalvo = sessionStorage.getItem("resultado-desconto");
+    const descontoInfoSalvo = sessionStorage.getItem("desconto-info");
+    if (descontoSalvo) document.getElementById("resultado-desconto").innerText = descontoSalvo;
+    if (descontoInfoSalvo) document.getElementById("desconto-info").innerText = descontoInfoSalvo;
+
+    // Garante que apenas o bloco de parcelamento seja visível no carregamento
+    document.getElementById("desconto-bloco").style.display = "none";
+    document.getElementById("calculadora-bloco").style.display = "block";
+};
+
+window.onload = () => {
+    preencherParcelas(); // Populate dropdown with embedded fatores
+
+    const campos = ["valor", "parcelas"];
+    campos.forEach(id => {
+    const element = document.getElementById(id);
+    element.addEventListener("input", () => {
+        // Debounce input to prevent rapid firing on mobile
+        clearTimeout(element.debounceTimeout);
+        element.debounceTimeout = setTimeout(calcularParcelamento, 300);
+    });
+    });
+
+    const descontoCampos = ["produto", "desconto"];
+    descontoCampos.forEach(id => {
+    const element = document.getElementById(id);
+    element.addEventListener("input", () => {
+        clearTimeout(element.debounceTimeout);
+        element.debounceTimeout = setTimeout(calcularDesconto, 300);
+    });
+    });
+
+    // Restore saved results
+    const salvo = sessionStorage.getItem("resultado");
+    const fatorSalvo = sessionStorage.getItem("fator");
+    if (salvo) document.getElementById("resultado").innerText = salvo;
+    if (fatorSalvo) document.getElementById("fator").innerText = `Fator usado: ${fatorSalvo}`;
+
+    const descontoSalvo = sessionStorage.getItem("resultado-desconto");
+    const descontoInfoSalvo = sessionStorage.getItem("desconto-info");
+    if (descontoSalvo) document.getElementById("resultado-desconto").innerText = descontoSalvo;
+    if (descontoInfoSalvo) document.getElementById("desconto-info").innerText = descontoInfoSalvo;
+};
+</script>
+</body>
+</html>
