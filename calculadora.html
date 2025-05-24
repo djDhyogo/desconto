@@ -1,0 +1,124 @@
+Codigo calculadora do site original
+
+function calculaDesconto() {
+
+    const p1 = 7.00;
+    const p2 = 6.99;
+    const p3 = 6.99;
+    const p4 = 6.97;
+    const p5 = 7.02;
+    const p6 = 7.95;
+    const p7 = 7.99;
+    const p8 = 8.00;
+    const p9 = 7.99;
+    const p10 = 8.00;
+    const p11 = 7.99;
+    const p12 = 8.04;
+
+    var taxa = 0.00;
+
+    var vProdutos = document.getElementById("produto").value;
+    var vEntrada = document.getElementById("entrada").value;
+    var nParcelas = document.getElementById("parcela").value;
+    var vParcela = document.getElementById("valor").value;
+
+    switch (nParcelas) {
+        case "1":
+            taxa = p1;
+            break;
+        case "2":
+            taxa = p2;
+            break;
+        case "3":
+            taxa = p3;
+            break;
+        case "4":
+            taxa = p4;
+            break;
+        case "5":
+            taxa = p5;
+            break;
+        case "6":
+            taxa = p6;
+            break;
+        case "7":
+            taxa = p7;
+            break;
+        case "8":
+            taxa = p8;
+            break;
+        case "9":
+            taxa = p9;
+            break;
+        case "10":
+            taxa = p10;
+            break;
+        case "11":
+            taxa = p11;
+            break;
+        case "12":
+            taxa = p12;
+            break;
+        default:
+            taxa = p12;
+    }
+
+    var pmt = vParcela;
+    var r = taxa / 100;
+    var n = nParcelas;
+    var v = vProdutos - vEntrada;
+
+    var pv = pmt * ((1 - Math.pow((1 + r), -n)) / r);
+
+    var vDesconto = v - pv;
+
+    var resultado = vDesconto.toFixed(2);
+
+    if (resultado <= 0.00 || isNaN(resultado)) {
+
+        document.getElementById('aviso').style.display = "block";
+        setTimeout(() => {
+            document.getElementById('aviso').style.display = "none";
+        }
+            , 1000);
+    } else {
+
+        document.getElementById('resultado').innerText = convertToReal(resultado, { moneySign: false });
+
+    }
+
+    return;
+}
+
+function convertToReal(number, options = {}) {
+    const { moneySign = true } = options;
+
+    if (Number.isNaN(number) || !number) return "need a number as the first parameter";
+
+    if (typeof number === "string") {
+        number = Number(number);
+    }
+
+    let res;
+
+    const config = moneySign ? { style: 'currency', currency: 'BRL' } : { minimumFractionDigits: 2 };
+
+    moneySign
+        ? res = number.toLocaleString('pt-BR', config)
+        : res = number.toLocaleString('pt-BR', config)
+
+    const needComma = number => number <= 1000;
+    if (needComma(number)) {
+        res = res.toString().replace(".", ",");
+    }
+
+    return res;
+}
+
+function limpaCampos() {
+
+    document.getElementById("formulario").reset();
+    document.getElementById('resultado').innerText = '';
+
+    return;
+}
