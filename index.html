@@ -331,7 +331,7 @@ function calcularParcelamento() {
 
     // Exibe as informações adicionais
     const totalParcelas = valorParcela * parseInt(parcelas);
-    elInfo.innerText = `Fator usado: ${fator.toFixed(6)} | ${parcelas} x parcela = ${formatarMoeda(totalParcelas)}`;
+    elInfo.innerText = `Fator usado: ${fator.toFixed(3)} | ${parcelas} x parcela = ${formatarMoeda(totalParcelas)}`;
 
     sessionStorage.setItem("resultado-parcelamento", texto);
 }
@@ -450,7 +450,7 @@ function enviarWhatsAppParcelamento() {
                         `${parcelas}x de R$ ${formatarMoeda(valorParcela)}\n` +
                         `Finac: R$ ${formatarMoeda(valorParcela * parcelas + entrada - valorComDesconto)}\n` +
                         `Valor Total: R$ ${formatarMoeda(valorParcela * parcelas + entrada)}`;
-    const textoInfo = `Fator usado: ${fator.toFixed(6)} | ${parcelas} x parcela = ${formatarMoeda(valorParcela * parseInt(parcelas))}`;
+    const textoInfo = `Fator usado: ${fator.toFixed(3)} | ${parcelas} x parcela = ${formatarMoeda(valorParcela * parseInt(parcelas))}`;
 
     const texto = `Olá! Sua Simulação de Parcelamento:\n\n` +
                   `${textoInfo}\n\n` +

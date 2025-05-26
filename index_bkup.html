@@ -4,6 +4,23 @@
 <meta charset="UTF-8">
 <title>Calculadora de Parcelas e Desconto</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Favicon e Ícones -->
+<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+<link rel="shortcut icon" href="/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="/favicon/site.webmanifest" />
+
+<!-- Configurações para iOS -->
+<meta name="apple-mobile-web-app-title" content="Parcela / Desconto" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+<!-- Tema para Android e iOS -->
+<meta name="theme-color" content="#002366" />
+</head>
 <style>
 body {
     background-color: #f7f7f7;
@@ -200,7 +217,7 @@ const fatores = {
     "9": 0.160,
     "10": 0.149,
     "11": 0.140,
-    "12": 0.132965 // Ajustado para garantir parcela de 550,00
+    "12": 0.133
 };
 
 // Taxas de juros mensais (em %) para a Calculadora de Desconto
@@ -289,10 +306,7 @@ function calcularParcelamento() {
 
     // Cálculos
     const valorDesconto = valor * (descontoPercentual / 100);
-    let valorComDesconto = valor - valorDesconto;
-    if (valor === 5500 && descontoPercentual === 19.34) {
-        valorComDesconto = 4436.27; // Forçar o valor correto
-    }
+    const valorComDesconto = valor - valorDesconto;
     if (entrada > valorComDesconto) {
         elError.innerText = "A entrada não pode ser maior que o valor com desconto.";
         return;
@@ -317,9 +331,8 @@ function calcularParcelamento() {
 
     // Exibe as informações adicionais
     const totalParcelas = valorParcela * parseInt(parcelas);
-    elInfo.innerText = `Fator usado: ${fator.toFixed(3)} | ${parcelas} x parcela = ${formatarMoeda(totalParcelas)}`;
+    elInfo.innerText = `Fator usado: ${fator.toFixed(6)} | ${parcelas} x parcela = ${formatarMoeda(totalParcelas)}`;
 
-    
     sessionStorage.setItem("resultado-parcelamento", texto);
 }
 
@@ -365,7 +378,7 @@ function copiarResultadoParcelamento() {
         elError.innerText = "Nenhum resultado disponível para copiar.";
         return;
     }
-    const texto = `${info}\n${resultado}`; // Info primeiro, depois o resumo
+    const texto = `${info}\n${resultado}`;
     navigator.clipboard.writeText(texto).then(() => {
         alert("Resultado copiado para a área de transferência!");
     }).catch(() => {
@@ -418,10 +431,7 @@ function enviarWhatsAppParcelamento() {
     }
 
     const valorDesconto = valor * (descontoPercentual / 100);
-    let valorComDesconto = valor - valorDesconto;
-    if (valor === 5500 && descontoPercentual === 19.34) {
-        valorComDesconto = 4436.27; // Forçar o valor correto
-    }
+    const valorComDesconto = valor - valorDesconto;
     if (entrada > valorComDesconto) {
         elError.innerText = "A entrada não pode ser maior que o valor com desconto.";
         return;
@@ -500,7 +510,6 @@ function calcularDesconto() {
     let pv;
     try {
         pv = valorParcela * ((1 - Math.pow(1 + taxa, -n)) / taxa);
-        pv = Math.ceil(pv * 100) / 100;
     } catch (e) {
         elError.innerText = "Erro no cálculo: taxa inválida.";
         console.error("Erro no cálculo do valor presente:", e);
@@ -611,7 +620,7 @@ function enviarWhatsAppDesconto() {
     const valorFinanciado = produto - entrada;
     const taxa = taxas[parcelaSelect] / 100;
     const n = parseInt(parcelaSelect);
-    const pv = Math.ceil((valorParcela * ((1 - Math.pow(1 + taxa, -n)) / taxa)) * 100) / 100;
+    const pv = valorParcela * ((1 - Math.pow(1 + taxa, -n)) / taxa);
     const desconto = valorFinanciado - pv;
 
     const texto = `Simulação de Desconto:\n\n` +
