@@ -1,21 +1,23 @@
 {
-  "name": "Parcela / Desconto",
-  "short_name": "Parcela / Desconto",
+  "name": "Calculadora de Parcelas e Desconto",
+  "short_name": "Parcela",
   "icons": [
     {
-      "src": "/web-app-manifest-192x192.png",
+      "src": "./web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/web-app-manifest-512x512.png",
+      "src": "./web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffdd00",
-  "display": "standalone"
+  "theme_color": "#002366",
+  "background_color": "#f7f7f7",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/"
 }
