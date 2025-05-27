@@ -5,13 +5,13 @@
 <title>Calculadora de Parcelas e Desconto</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Favicon e Ícones -->
-<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
-<link rel="shortcut icon" href="/favicon/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="icon" type="image/png" href="./favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg" />
+<link rel="shortcut icon" href="./favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png" />
 
 <!-- PWA Manifest -->
-<link rel="manifest" href="/favicon/site.webmanifest" />
+<link rel="manifest" href="./favicon/site.webmanifest" />
 
 <!-- Configurações para iOS -->
 <meta name="apple-mobile-web-app-title" content="Parcela / Desconto" />
@@ -21,700 +21,732 @@
 <!-- Tema para Android e iOS -->
 <meta name="theme-color" content="#002366" />
 </head>
-<style>
-body {
-    background-color: #f7f7f7;
-    color: #002366;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    touch-action: manipulation;
-}
-.container {
-    background: linear-gradient(to bottom, #f7f7f7, #fff);
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
-h1, h2 {
-    color: #002366;
-    font-size: 1.4em;
-    margin-bottom: 15px;
-}
-label {
-    display: block;
-    margin-top: 15px;
-    font-size: 1em;
-}
-input, select {
-    width: 100%;
-    padding: 12px;
-    margin-top: 5px;
-    font-size: 1em;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    transition: border 0.3s, box-shadow 0.3s;
-}
-input:focus, select:focus, button:focus {
-    border-color: #0055cc;
-    box-shadow: 0 0 5px rgba(0, 85, 204, 0.3);
-    outline: none;
-}
-input[type="number"] {
-    appearance: textfield;
-    -moz-appearance: textfield;
-}
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-#desconto-info, #info-parcelamento {
-    font-size: 0.85em;
-    color: #444;
-}
-#info-parcelamento {
-    margin-bottom: 10px;
-}
-#resultado-parcelamento, #resultado-desconto {
-    margin-top: 0;
-    font-size: 1.2em;
-    color: #002366;
-    background-color: #ffdd00;
-    padding: 12px;
-    border-radius: 8px;
-    white-space: pre-line;
-}
-.btn {
-    background-color: #002366;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 1em;
-    padding: 12px;
-    margin-top: 15px;
-    border-radius: 10px;
-    touch-action: manipulation;
-}
-.btn:hover {
-    background-color: #00194d;
-}
-.btn-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
-}
-.btn-half {
-    flex: 1 1 calc(50% - 5px);
-    min-width: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.link {
-    display: block;
-    margin-top: 30px;
-    color: #002366;
-    cursor: pointer;
-    touch-action: manipulation;
-}
-#desconto-bloco {
-    display: none;
-    margin-top: 40px;
-}
-.error {
-    color: #d32f2f;
-    font-size: 0.9em;
-    margin-top: 5px;
-}
-@media (min-width: 600px) {
-    body {
-        max-width: 420px;
-        margin: auto;
-    }
-}
-@media (max-width: 599px) {
-    input, select, .btn {
-        font-size: 16px;
-    }
-}
-</style>
+    <style>
+        body {
+            background-color: #f7f7f7;
+            color: #002366;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            touch-action: manipulation;
+        }
+        .container {
+            background: linear-gradient(to bottom, #f7f7f7, #fff);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+        h1, h2 {
+            color: #002366;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-size: 1em;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        input:focus, select:focus, button:focus {
+            border-color: #0055cc;
+            box-shadow: 0 0 5px rgba(0, 85, 204, 0.3);
+            outline: none;
+        }
+        input[type="number"] {
+            appearance: textfield;
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        #desconto-info, #info-parcelamento {
+            font-size: 0.85em;
+            color: #444;
+        }
+        #info-parcelamento {
+            margin-bottom: 10px;
+        }
+        #resultado-parcelamento, #resultado-desconto {
+            margin-top: 0;
+            font-size: 1.2em;
+            color: #002366;
+            background-color: #ffdd00;
+            padding: 12px;
+            border-radius: 8px;
+            white-space: pre-line;
+        }
+        .btn {
+            background-color: #002366;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 10px;
+            touch-action: manipulation;
+        }
+        .btn:hover {
+            background-color: #00194d;
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .btn-half {
+            flex: 1 1 calc(50% - 5px);
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .link {
+            display: block;
+            margin-top: 30px;
+            color: #002366;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        #desconto-bloco {
+            display: none;
+            margin-top: 40px;
+        }
+        .error {
+            color: #d32f2f;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        @media (min-width: 600px) {
+            body {
+                max-width: 420px;
+                margin: auto;
+            }
+        }
+        @media (max-width: 599px) {
+            input, select, .btn {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <div id="calculadora-bloco">
-        <h1>Calculadora de Parcelas 🏷️</h1>
-        <label for="valor">Valor do Produto (R$):</label>
-        <input type="number" id="valor" placeholder="R$ 1000" step="0.01" min="0">
-        <label for="entrada-parcelamento">Valor da Entrada (R$) (opcional):</label>
-        <input type="number" id="entrada-parcelamento" placeholder="R$ 0 (opcional)" step="0.01" min="0">
-        <label for="desconto-percentual">Percentual de Desconto (%) (opcional):</label>
-        <input type="number" id="desconto-percentual" placeholder="0% (opcional)" step="0.01" min="0">
-        <label for="parcelas">Número de Parcelas:</label>
-        <select id="parcelas">
-            <option value="">Selecione</option>
-        </select>
-        <div id="info-parcelamento"></div>
-        <div id="resultado-parcelamento"></div>
-        <div id="error-parcelamento" class="error"></div>
-        <div class="btn-group">
-            <button class="btn btn-half" onclick="limparParcelamento()" aria-label="Limpar campos de parcelamento">Limpar</button>
-            <button class="btn btn-half" onclick="calcularParcelamento()" aria-label="Calcular parcelamento">Calcular</button>
-            <button class="btn btn-half" onclick="copiarResultadoParcelamento()" aria-label="Copiar resultado do parcelamento">Copiar Resultado</button>
-            <button class="btn btn-half" onclick="enviarWhatsAppParcelamento()" aria-label="Enviar resultado de parcelamento para WhatsApp">Enviar no WhatsApp</button>
+    <div class="container">
+        <div id="calculadora-bloco">
+            <h1>Calculadora de Parcelas 🏷️</h1>
+            <label for="valor">Valor do Produto (R$):</label>
+            <input type="number" id="valor" placeholder="R$ 1000" step="0.01" min="0">
+            <label for="entrada-parcelamento">Valor da Entrada (R$) (opcional):</label>
+            <input type="number" id="entrada-parcelamento" placeholder="R$ 0 (opcional)" step="0.01" min="0">
+            <label for="desconto-percentual">Percentual de Desconto (%) (opcional):</label>
+            <input type="number" id="desconto-percentual" placeholder="0% (opcional)" step="0.01" min="0">
+            <label for="parcelas">Número de Parcelas:</label>
+            <select id="parcelas">
+                <option value="">Selecione</option>
+            </select>
+            <div id="info-parcelamento"></div>
+            <div id="resultado-parcelamento"></div>
+            <div id="error-parcelamento" class="error"></div>
+            <div class="btn-group">
+                <button class="btn btn-half" onclick="limparParcelamento()" aria-label="Limpar campos de parcelamento">Limpar</button>
+                <button class="btn btn-half" onclick="calcularParcelamento()" aria-label="Calcular parcelamento">Calcular</button>
+                <button class="btn btn-half" onclick="copiarResultadoParcelamento()" aria-label="Copiar resultado do parcelamento">Copiar Resultado</button>
+                <button class="btn btn-half" onclick="enviarWhatsAppParcelamento()" aria-label="Enviar resultado de parcelamento para WhatsApp">Enviar no WhatsApp</button>
+            </div>
+            <a class="link" onclick="mostrarDesconto()">➕ Calcular Desconto</a>
         </div>
-        <a class="link" onclick="mostrarDesconto()">➕ Calcular Desconto</a>
-    </div>
-    <div id="desconto-bloco">
-        <h2>Calculadora de Desconto 🤑</h2>
-        <label for="produto">Valor Total do Pedido (R$):</label>
-        <input type="number" id="produto" placeholder="R$ 4199" step="0.01" min="0">
-        <label for="entrada">Valor da Entrada (R$) (opcional):</label>
-        <input type="number" id="entrada" placeholder="R$ 0 (opcional)" step="0.01" min="0">
-        <label for="parcela-select">Número de Parcelas:</label>
-        <select id="parcela-select">
-            <option value="">Selecione</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-        </select>
-        <label for="valor-parcela">Valor da Parcela (R$):</label>
-        <input type="number" id="valor-parcela" placeholder="R$ 334" step="0.01" min="0">
-        <div id="desconto-info"></div>
-        <div id="resultado-desconto"></div>
-        <div id="error-desconto" class="error"></div>
-        <div class="btn-group">
-            <button class="btn btn-half" onclick="limparDesconto()" aria-label="Limpar campos de desconto">Limpar</button>
-            <button class="btn btn-half" onclick="calcularDesconto()" aria-label="Calcular desconto">Calcular</button>
-            <button class="btn btn-half" onclick="copiarResultadoDesconto()" aria-label="Copiar resultado do desconto">Copiar Resultado</button>
-            <button class="btn btn-half" onclick="enviarWhatsAppDesconto()" aria-label="Enviar resultado de desconto para WhatsApp">Enviar no WhatsApp</button>
+        <div id="desconto-bloco">
+            <h2>Calculadora de Desconto 🤑</h2>
+            <label for="produto">Valor Total do Pedido (R$):</label>
+            <input type="number" id="produto" placeholder="R$ 4199" step="0.01" min="0">
+            <label for="entrada">Valor da Entrada (R$) (opcional):</label>
+            <input type="number" id="entrada" placeholder="R$ 0 (opcional)" step="0.01" min="0">
+            <label for="parcela-select">Número de Parcelas:</label>
+            <select id="parcela-select">
+                <option value="">Selecione</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <label for="valor-parcela">Valor da Parcela (R$):</label>
+            <input type="number" id="valor-parcela" placeholder="R$ 334" step="0.01" min="0">
+            <div id="desconto-info"></div>
+            <div id="resultado-desconto"></div>
+            <div id="error-desconto" class="error"></div>
+            <div class="btn-group">
+                <button class="btn btn-half" onclick="limparDesconto()" aria-label="Limpar campos de desconto">Limpar</button>
+                <button class="btn btn-half" onclick="calcularDesconto()" aria-label="Calcular desconto">Calcular</button>
+                <button class="btn btn-half" onclick="copiarResultadoDesconto()" aria-label="Copiar resultado do desconto">Copiar Resultado</button>
+                <button class="btn btn-half" onclick="enviarWhatsAppDesconto()" aria-label="Enviar resultado de desconto para WhatsApp">Enviar no WhatsApp</button>
+            </div>
+            <a class="link" onclick="mostrarParcelas()">🔁 Voltar ao Cálculo de Parcelas</a>
         </div>
-        <a class="link" onclick="mostrarParcelas()">🔁 Voltar ao Cálculo de Parcelas</a>
     </div>
-</div>
-<script>
-// Fatores para a Calculadora de Parcelas (usados para calcular o valor da parcela com base no valor a financiar)
-const fatores = {
-    "1": 1.070,
-    "2": 0.553,
-    "3": 0.381,
-    "4": 0.295,
-    "5": 0.244,
-    "6": 0.216,
-    "7": 0.192,
-    "8": 0.174,
-    "9": 0.160,
-    "10": 0.149,
-    "11": 0.140,
-    "12": 0.133
-};
+    <script>
+        // Fatores para a Calculadora de Parcelas
+        const fatores = {
+            "1": 1.070,
+            "2": 0.553,
+            "3": 0.381,
+            "4": 0.295,
+            "5": 0.244,
+            "6": 0.216,
+            "7": 0.192,
+            "8": 0.174,
+            "9": 0.160,
+            "10": 0.149,
+            "11": 0.140,
+            "12": 0.133
+        };
 
-// Taxas de juros mensais (em %) para a Calculadora de Desconto
-const taxas = {
-    "1": 7.00,
-    "2": 6.99,
-    "3": 6.99,
-    "4": 6.97,
-    "5": 7.02,
-    "6": 7.95,
-    "7": 7.99,
-    "8": 8.00,
-    "9": 7.99,
-    "10": 8.00,
-    "11": 7.99,
-    "12": 8.04
-};
+        // Taxas de juros mensais (em %) para a Calculadora de Desconto
+        const taxas = {
+            "1": 7.00,
+            "2": 6.99,
+            "3": 6.99,
+            "4": 6.97,
+            "5": 7.02,
+            "6": 7.95,
+            "7": 7.99,
+            "8": 8.00,
+            "9": 7.99,
+            "10": 8.00,
+            "11": 7.99,
+            "12": 8.04
+        };
 
-// Função auxiliar para formatar valores no padrão brasileiro
-const formatarMoeda = (valor) => {
-    return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-};
+        // Função auxiliar para formatar valores no padrão brasileiro
+        const formatarMoeda = (valor) => {
+            return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        };
 
-// Popula o select de parcelas da Calculadora de Parcelas
-function preencherParcelas() {
-    const select = document.getElementById("parcelas");
-    if (!select) {
-        console.error("Elemento com ID 'parcelas' não encontrado.");
-        return;
-    }
-    select.innerHTML = '<option value="">Selecione</option>';
-    Object.keys(fatores).forEach(p => {
-        const option = document.createElement("option");
-        option.value = p;
-        option.textContent = `${p}x`;
-        select.appendChild(option);
-    });
-}
-
-// Calcula o parcelamento com base no valor do produto, entrada, desconto percentual e número de parcelas
-function calcularParcelamento() {
-    const valorInput = document.getElementById("valor");
-    const entradaInput = document.getElementById("entrada-parcelamento");
-    const descontoPercentualInput = document.getElementById("desconto-percentual");
-    const parcelasInput = document.getElementById("parcelas");
-    const elResultado = document.getElementById("resultado-parcelamento");
-    const elInfo = document.getElementById("info-parcelamento");
-    const elError = document.getElementById("error-parcelamento");
-
-    if (!valorInput || !entradaInput || !descontoPercentualInput || !parcelasInput || !elResultado || !elInfo || !elError) {
-        console.error("Um ou mais elementos DOM não foram encontrados em calcularParcelamento.");
-        alert("Erro: Elementos da página não encontrados.");
-        return;
-    }
-
-    elError.innerText = ""; // Limpa mensagens de erro
-    const valor = parseFloat(valorInput.value);
-    const entradaValue = entradaInput.value.trim();
-    const entrada = entradaValue === "" ? 0 : parseFloat(entradaValue);
-    const descontoPercentualValue = descontoPercentualInput.value.trim();
-    const descontoPercentual = descontoPercentualValue === "" ? 0 : parseFloat(descontoPercentualValue);
-    const parcelas = parcelasInput.value;
-    const fator = fatores[parcelas];
-
-    // Validações
-    if (!valor || isNaN(valor) || valor <= 0) {
-        elError.innerText = "Insira um valor do produto válido (maior que 0).";
-        return;
-    }
-    if (isNaN(entrada) || entrada < 0) {
-        elError.innerText = "O valor da entrada não pode ser negativo.";
-        return;
-    }
-    if (isNaN(descontoPercentual) || descontoPercentual < 0) {
-        elError.innerText = "O percentual de desconto não pode ser negativo.";
-        return;
-    }
-    if (descontoPercentual > 100) {
-        elError.innerText = "O percentual de desconto não pode exceder 100%.";
-        return;
-    }
-    if (!parcelas || !fator) {
-        elError.innerText = "Selecione um número válido de parcelas.";
-        return;
-    }
-
-    // Cálculos
-    const valorDesconto = valor * (descontoPercentual / 100);
-    const valorComDesconto = valor - valorDesconto;
-    if (entrada > valorComDesconto) {
-        elError.innerText = "A entrada não pode ser maior que o valor com desconto.";
-        return;
-    }
-    const valorAFinanciar = valorComDesconto - entrada;
-    if (valorAFinanciar <= 0) {
-        elError.innerText = "O valor a financiar deve ser maior que zero.";
-        return;
-    }
-    const valorParcela = valorAFinanciar * fator;
-
-    // Exibe o resumo
-    const texto = 
-        `P.Livro: R$ ${formatarMoeda(valor)}\n` +
-        `Total Livro: R$ ${formatarMoeda(valorComDesconto)}\n` +
-        `Desconto: R$ ${formatarMoeda(valorDesconto)} (${descontoPercentual}%)\n` +
-        `Entrada: R$ ${formatarMoeda(entrada)}\n` +
-        `Plano:${parcelas}x de R$ ${formatarMoeda(valorParcela)}\n` +
-        `Finac: R$ ${formatarMoeda(valorParcela * parcelas + entrada - valorComDesconto)}\n` +
-        `Valor Total: R$ ${formatarMoeda(valorParcela * parcelas + entrada)}`;
-    elResultado.innerText = texto;
-
-    // Exibe as informações adicionais
-    const totalParcelas = valorParcela * parseInt(parcelas);
-    elInfo.innerText = `Fator usado: ${fator.toFixed(3)} | ${parcelas} x ${formatarMoeda(valorParcela)} = ${formatarMoeda(totalParcelas)}`;
-
-    sessionStorage.setItem("resultado-parcelamento", texto);
-}
-
-// Limpa os resultados da Calculadora de Parcelas
-function limparResultadoParcelamento() {
-    const elResultado = document.getElementById("resultado-parcelamento");
-    const elInfo = document.getElementById("info-parcelamento");
-    const elError = document.getElementById("error-parcelamento");
-    if (elResultado) elResultado.innerText = "";
-    if (elInfo) elInfo.innerText = "";
-    if (elError) elError.innerText = "";
-    sessionStorage.removeItem("resultado-parcelamento");
-}
-
-// Limpa todos os campos da Calculadora de Parcelas
-function limparParcelamento() {
-    const valorInput = document.getElementById("valor");
-    const entradaInput = document.getElementById("entrada-parcelamento");
-    const descontoPercentualInput = document.getElementById("desconto-percentual");
-    const parcelasInput = document.getElementById("parcelas");
-    if (valorInput) valorInput.value = "";
-    if (entradaInput) entradaInput.value = "";
-    if (descontoPercentualInput) descontoPercentualInput.value = "";
-    if (parcelasInput) parcelasInput.value = "";
-    limparResultadoParcelamento();
-}
-
-// Copia o resultado da Calculadora de Parcelas para a área de transferência
-function copiarResultadoParcelamento() {
-    const elResultado = document.getElementById("resultado-parcelamento");
-    const elInfo = document.getElementById("info-parcelamento");
-    const elError = document.getElementById("error-parcelamento");
-
-    if (!elResultado || !elInfo || !elError) {
-        console.error("Um ou mais elementos DOM não foram encontrados em copiarResultadoParcelamento.");
-        alert("Erro: Elementos da página não encontrados.");
-        return;
-    }
-
-    const resultado = elResultado.innerText;
-    const info = elInfo.innerText;
-    if (!resultado) {
-        elError.innerText = "Nenhum resultado disponível para copiar.";
-        return;
-    }
-    const texto = `${info}\n${resultado}`;
-    navigator.clipboard.writeText(texto).then(() => {
-        alert("Resultado copiado para a área de transferência!");
-    }).catch(() => {
-        elError.innerText = "Erro ao copiar o resultado.";
-    });
-}
-
-// Envia o resultado da Calculadora de Parcelas via WhatsApp
-function enviarWhatsAppParcelamento() {
-    const valorInput = document.getElementById("valor");
-    const entradaInput = document.getElementById("entrada-parcelamento");
-    const descontoPercentualInput = document.getElementById("desconto-percentual");
-    const parcelasInput = document.getElementById("parcelas");
-    const elError = document.getElementById("error-parcelamento");
-
-    if (!valorInput || !entradaInput || !descontoPercentualInput || !parcelasInput || !elError) {
-        console.error("Um ou mais elementos DOM não foram encontrados em enviarWhatsAppParcelamento.");
-        alert("Erro: Elementos da página não encontrados.");
-        return;
-    }
-
-    const valor = parseFloat(valorInput.value);
-    const entradaValue = entradaInput.value.trim();
-    const entrada = entradaValue === "" ? 0 : parseFloat(entradaValue);
-    const descontoPercentualValue = descontoPercentualInput.value.trim();
-    const descontoPercentual = descontoPercentualValue === "" ? 0 : parseFloat(descontoPercentualValue);
-    const parcelas = parcelasInput.value;
-    const fator = fatores[parcelas];
-
-    // Validações
-    if (!valor || isNaN(valor) || valor <= 0) {
-        elError.innerText = "Insira um valor do produto válido (maior que 0).";
-        return;
-    }
-    if (isNaN(entrada) || entrada < 0) {
-        elError.innerText = "O valor da entrada não pode ser negativo.";
-        return;
-    }
-    if (isNaN(descontoPercentual) || descontoPercentual < 0) {
-        elError.innerText = "O percentual de desconto não pode ser negativo.";
-        return;
-    }
-    if (descontoPercentual > 100) {
-        elError.innerText = "O percentual de desconto não pode exceder 100%.";
-        return;
-    }
-    if (!parcelas || !fator) {
-        elError.innerText = "Selecione um número válido de parcelas.";
-        return;
-    }
-
-    const valorDesconto = valor * (descontoPercentual / 100);
-    const valorComDesconto = valor - valorDesconto;
-    if (entrada > valorComDesconto) {
-        elError.innerText = "A entrada não pode ser maior que o valor com desconto.";
-        return;
-    }
-    const valorAFinanciar = valorComDesconto - entrada;
-    if (valorAFinanciar <= 0) {
-        elError.innerText = "O valor a financiar deve ser maior que zero.";
-        return;
-    }
-    const valorParcela = valorAFinanciar * fator;
-
-    const textoResumo = `P.Livro: R$ ${formatarMoeda(valor)}\n` +
-                        `Total Livro: R$ ${formatarMoeda(valorComDesconto)}\n` +
-                        `Desconto: R$ ${formatarMoeda(valorDesconto)} (${descontoPercentual}%)\n` +
-                        `Entrada: R$ ${formatarMoeda(entrada)}\n` +
-                        `${parcelas}x de R$ ${formatarMoeda(valorParcela)}\n` +
-                        `Finac: R$ ${formatarMoeda(valorParcela * parcelas + entrada - valorComDesconto)}\n` +
-                        `Valor Total: R$ ${formatarMoeda(valorParcela * parcelas + entrada)}`;
-    const textoInfo =  `Fator usado: ${fator.toFixed(3)} | ${parcelas} x ${formatarMoeda(valorParcela)}= ${formatarMoeda(valorParcela * parseInt(parcelas))}`;
-
-    const texto = `Olá! Sua Simulação de Parcelamento:\n\n` +
-                  `${textoInfo}\n\n` +
-                  `${textoResumo}\n\n` +
-                  `Consultora: *Marta Alves*`;
-    const numero = "5599992172611";
-    window.open(`https://wa.me/${numero}?text=${encodeURIComponent(texto)}`, "_blank");
-}
-
-// Calcula o desconto com base no valor presente de uma anuidade com juros compostos
-function calcularDesconto() {
-    const produtoInput = document.getElementById("produto");
-    const entradaInput = document.getElementById("entrada");
-    const parcelaSelectInput = document.getElementById("parcela-select");
-    const valorParcelaInput = document.getElementById("valor-parcela");
-    const elResultado = document.getElementById("resultado-desconto");
-    const elInfo = document.getElementById("desconto-info");
-    const elError = document.getElementById("error-desconto");
-
-    if (!produtoInput || !entradaInput || !parcelaSelectInput || !valorParcelaInput || !elResultado || !elInfo || !elError) {
-        console.error("Um ou mais elementos DOM não foram encontrados em calcularDesconto.");
-        alert("Erro: Elementos da página não encontrados.");
-        return;
-    }
-
-    elError.innerText = "";
-    const produto = parseFloat(produtoInput.value);
-    const entradaValue = entradaInput.value.trim();
-    const entrada = entradaValue === "" ? 0 : parseFloat(entradaValue);
-    const parcelaSelect = parcelaSelectInput.value;
-    const valorParcela = parseFloat(valorParcelaInput.value);
-
-    if (!produto || isNaN(produto) || produto <= 0) {
-        elError.innerText = "Insira um valor total válido (maior que 0).";
-        return;
-    }
-    if (isNaN(entrada) || entrada < 0) {
-        elError.innerText = "O valor da entrada não pode ser negativo.";
-        return;
-    }
-    if (entrada >= produto) {
-        elError.innerText = "A entrada deve ser menor que o valor total.";
-        return;
-    }
-    if (!parcelaSelect || !taxas[parcelaSelect]) {
-        elError.innerText = "Selecione um número válido de parcelas.";
-        return;
-    }
-    if (!valorParcela || isNaN(valorParcela) || valorParcela <= 0) {
-        elError.innerText = "Insira um valor de parcela válido (maior que 0).";
-        return;
-    }
-
-    const valorFinanciado = produto - entrada;
-    const taxa = taxas[parcelaSelect] / 100;
-    const n = parseInt(parcelaSelect);
-    let pv;
-    try {
-        pv = valorParcela * ((1 - Math.pow(1 + taxa, -n)) / taxa);
-    } catch (e) {
-        elError.innerText = "Erro no cálculo: taxa inválida.";
-        console.error("Erro no cálculo do valor presente:", e);
-        return;
-    }
-
-    const desconto = valorFinanciado - pv;
-    if (desconto <= 0 || isNaN(desconto)) {
-        elResultado.innerText = "Desconto inválido.";
-        elInfo.innerText = "";
-        elError.innerText = "O cálculo resultou em um desconto inválido. Verifique os valores inseridos.";
-    } else {
-        elResultado.innerText = `Desconto: R$ ${formatarMoeda(desconto)}`;
-        elInfo.innerText = `Valor financiado: R$ ${formatarMoeda(valorFinanciado)} | Taxa: ${taxas[parcelaSelect]}%`;
-        sessionStorage.setItem("resultado-desconto", `Desconto: R$ ${formatarMoeda(desconto)}`);
-        sessionStorage.setItem("desconto-info", `Valor financiado: R$ ${formatarMoeda(valorFinanciado)} | Taxa: ${taxas[parcelaSelect]}% `);
-    }
-}
-
-// Copia o resultado do desconto para a área de transferência
-function copiarResultadoDesconto() {
-    const elResultado = document.getElementById("resultado-desconto");
-    const elInfo = document.getElementById("desconto-info");
-    const elError = document.getElementById("error-desconto");
-
-    if (!elResultado || !elInfo || !elError) {
-        console.error("Um ou mais elementos DOM não foram encontrados em copiarResultadoDesconto.");
-        alert("Erro: Elementos da página não encontrados.");
-        return;
-    }
-
-    const resultado = elResultado.innerText;
-    const info = elInfo.innerText;
-    if (!resultado) {
-        elError.innerText = "Nenhum resultado disponível para copiar.";
-        return;
-    }
-    const texto = `${resultado}\n${info}`;
-    navigator.clipboard.writeText(texto).then(() => {
-        alert("Resultado copiado para a área de transferência!");
-    }).catch(() => {
-        elError.innerText = "Erro ao copiar o resultado.";
-    });
-}
-
-// Limpa os campos e resultados da Calculadora de Desconto
-function limparDesconto() {
-    const produtoInput = document.getElementById("produto");
-    const entradaInput = document.getElementById("entrada");
-    const parcelaSelectInput = document.getElementById("parcela-select");
-    const valorParcelaInput = document.getElementById("valor-parcela");
-    const elResultado = document.getElementById("resultado-desconto");
-    const elInfo = document.getElementById("desconto-info");
-    const elError = document.getElementById("error-desconto");
-
-    if (produtoInput) produtoInput.value = "";
-    if (entradaInput) entradaInput.value = "";
-    if (parcelaSelectInput) parcelaSelectInput.value = "";
-    if (valorParcelaInput) valorParcelaInput.value = "";
-    if (elResultado) elResultado.innerText = "";
-    if (elInfo) elInfo.innerText = "";
-    if (elError) elError.innerText = "";
-    sessionStorage.removeItem("resultado-desconto");
-    sessionStorage.removeItem("desconto-info");
-}
-
-// Envia o resultado da Calculadora de Desconto via WhatsApp
-function enviarWhatsAppDesconto() {
-    const produtoInput = document.getElementById("produto");
-    const entradaInput = document.getElementById("entrada");
-    const parcelaSelectInput = document.getElementById("parcela-select");
-    const valorParcelaInput = document.getElementById("valor-parcela");
-    const elError = document.getElementById("error-desconto");
-
-    if (!produtoInput || !entradaInput || !parcelaSelectInput || !valorParcelaInput || !elError) {
-        console.error("Um ou mais elementos DOM não foram encontrados em enviarWhatsAppDesconto.");
-        alert("Erro: Elementos da página não encontrados.");
-        return;
-    }
-
-    const produto = parseFloat(produtoInput.value);
-    const entradaValue = entradaInput.value.trim();
-    const entrada = entradaValue === "" ? 0 : parseFloat(entradaValue);
-    const parcelaSelect = parcelaSelectInput.value;
-    const valorParcela = parseFloat(valorParcelaInput.value);
-
-    if (!produto || isNaN(produto) || produto <= 0) {
-        elError.innerText = "Insira um valor total válido (maior que 0).";
-        return;
-    }
-    if (isNaN(entrada) || entrada < 0) {
-        elError.innerText = "O valor da entrada não pode ser negativo.";
-        return;
-    }
-    if (entrada >= produto) {
-        elError.innerText = "A entrada deve ser menor que o valor total.";
-        return;
-    }
-    if (!parcelaSelect || !taxas[parcelaSelect]) {
-        elError.innerText = "Selecione um número válido de parcelas.";
-        return;
-    }
-    if (!valorParcela || isNaN(valorParcela) || valorParcela <= 0) {
-        elError.innerText = "Insira um valor de parcela válido (maior que 0).";
-        return;
-    }
-
-    const valorFinanciado = produto - entrada;
-    const taxa = taxas[parcelaSelect] / 100;
-    const n = parseInt(parcelaSelect);
-    const pv = valorParcela * ((1 - Math.pow(1 + taxa, -n)) / taxa);
-    const desconto = valorFinanciado - pv;
-
-    const texto = `Simulação de Desconto:\n\n` +
-                  `Valor total: R$ ${formatarMoeda(produto)}\n` +
-                  `Entrada: R$ ${formatarMoeda(entrada)}\n` +
-                  `Parcelas: ${parcelaSelect}x de R$ ${formatarMoeda(valorParcela)}\n` +
-                  `Desconto: R$ ${formatarMoeda(desconto)}\n` +
-                  `Valor presente: R$ ${formatarMoeda(pv)}\n` +
-                  `Taxa: ${taxas[parcelaSelect]}%\n\n` +
-                  `Valor financiado: R$ ${formatarMoeda(valorFinanciado)} | Taxa: ${taxas[parcelaSelect]}% | Valor presente: R$ ${formatarMoeda(pv)}\n\n` +
-                  `Consultora: *Marta Alves*`;
-    const numero = "5599992172611";
-    window.open(`https://wa.me/${numero}?text=${encodeURIComponent(texto)}`, "_blank");
-}
-
-// Alterna para a Calculadora de Desconto
-function mostrarDesconto() {
-    const calculadoraBloco = document.getElementById("calculadora-bloco");
-    const descontoBloco = document.getElementById("desconto-bloco");
-    if (!calculadoraBloco || !descontoBloco) {
-        console.error("Um ou mais elementos DOM não foram encontrados em mostrarDesconto.");
-        return;
-    }
-    calculadoraBloco.style.display = "none";
-    descontoBloco.style.display = "block";
-    setTimeout(() => {
-        descontoBloco.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
-}
-
-// Alterna para a Calculadora de Parcelas
-function mostrarParcelas() {
-    const descontoBloco = document.getElementById("desconto-bloco");
-    const calculadoraBloco = document.getElementById("calculadora-bloco");
-    if (!descontoBloco || !calculadoraBloco) {
-        console.error("Um ou mais elementos DOM não foram encontrados em mostrarParcelas.");
-        return;
-    }
-    descontoBloco.style.display = "none";
-    calculadoraBloco.style.display = "block";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-// Inicialização da página
-window.onload = () => {
-    preencherParcelas();
-
-    // Adiciona eventos de input com debounce para cálculo automático
-    const campos = ["valor", "entrada-parcelamento", "desconto-percentual", "parcelas"];
-    campos.forEach(id => {
-        const element = document.getElementById(id);
-        if (!element) {
-            console.error(`Elemento com ID '${id}' não encontrado.`);
-            return;
+        // Popula o select de parcelas da Calculadora de Parcelas
+        function preencherParcelas() {
+            const select = document.getElementById("parcelas");
+            if (!select) {
+                console.error("Elemento com ID 'parcelas' não encontrado.");
+                return;
+            }
+            select.innerHTML = '<option value="">Selecione</option>';
+            Object.keys(fatores).forEach(p => {
+                const option = document.createElement("option");
+                option.value = p;
+                option.textContent = `${p}x`;
+                select.appendChild(option);
+            });
         }
-        element.addEventListener("input", () => {
-            clearTimeout(element.debounceTimeout);
-            element.debounceTimeout = setTimeout(calcularParcelamento, 300);
-        });
-    });
 
-    const descontoCampos = ["produto", "entrada", "parcela-select", "valor-parcela"];
-    descontoCampos.forEach(id => {
-        const element = document.getElementById(id);
-        if (!element) {
-            console.error(`Elemento com ID '${id}' não encontrado.`);
-            return;
-        }
-        element.addEventListener("input", () => {
-            clearTimeout(element.debounceTimeout);
-            element.debounceTimeout = setTimeout(calcularDesconto, 300);
-        });
-    });
+       // Calcula o parcelamento com base no valor do produto, entrada, desconto percentual e número de parcelas
+        function calcularParcelamento() {
+            const valorInput = document.getElementById("valor");
+            const entradaInput = document.getElementById("entrada-parcelamento");
+            const descontoPercentualInput = document.getElementById("desconto-percentual");
+            const parcelasInput = document.getElementById("parcelas");
+            const elResultado = document.getElementById("resultado-parcelamento");
+            const elInfo = document.getElementById("info-parcelamento");
+            const elError = document.getElementById("error-parcelamento");
 
-    // Restaura resultados salvos
-    const salvo = sessionStorage.getItem("resultado-parcelamento");
-    const elResultado = document.getElementById("resultado-parcelamento");
-    const elInfo = document.getElementById("info-parcelamento");
-    if (salvo && elResultado) elResultado.innerText = salvo;
+            if (!valorInput || !entradaInput || !descontoPercentualInput || !parcelasInput || !elResultado || !elInfo || !elError) {
+                console.error("Um ou mais elementos DOM não foram encontrados em calcularParcelamento.");
+                alert("Erro: Elementos da página não encontrados.");
+                return;
+            }
 
-    const descontoSalvo = sessionStorage.getItem("resultado-desconto");
-    const descontoInfoSalvo = sessionStorage.getItem("desconto-info");
-    const elResultadoDesconto = document.getElementById("resultado-desconto");
-    const elDescontoInfo = document.getElementById("desconto-info");
-    if (descontoSalvo && elResultadoDesconto) elResultadoDesconto.innerText = descontoSalvo;
-    if (descontoInfoSalvo && elDescontoInfo) elDescontoInfo.innerText = descontoInfoSalvo;
+            elError.innerText = ""; // Limpa mensagens de erro
+            const valor = parseFloat(valorInput.value);
+            const entradaValue = entradaInput.value.trim();
+            const entrada = entradaValue === "" ? 0 : parseFloat(entradaValue);
+            const descontoPercentualValue = descontoPercentualInput.value.trim();
+            const descontoPercentual = descontoPercentualValue === "" ? 0 : parseFloat(descontoPercentualValue);
+            const parcelas = parcelasInput.value;
+            const fator = fatores[parcelas];
 
-    const descontoBloco = document.getElementById("desconto-bloco");
-    const calculadoraBloco = document.getElementById("calculadora-bloco");
-    if (descontoBloco && calculadoraBloco) {
-        descontoBloco.style.display = "none";
-        calculadoraBloco.style.display = "block";
+// Validações
+            if (!valor || isNaN(valor) || valor <= 0) {
+                elError.innerText = "Insira um valor do produto válido (maior que 0).";
+                return;
+            }
+            if (isNaN(entrada) || entrada < 0) {
+                elError.innerText = "O valor da entrada não pode ser negativo.";
+                return;
+            }
+            if (isNaN(descontoPercentual) || descontoPercentual < 0) {
+                elError.innerText = "O percentual de desconto não pode ser negativo.";
+                return;
+            }
+            if (descontoPercentual > 100) {
+                elError.innerText = "O percentual de desconto não pode exceder 100%.";
+                return;
+            }
+            if (!parcelas || !fator) {
+                elError.innerText = "Selecione um número válido de parcelas.";
+                return;
+            }
+
+// Cálculos
+            const valorDesconto = valor * (descontoPercentual / 100);
+            const valorComDesconto = valor - valorDesconto;
+            if (entrada > valorComDesconto) {
+                elError.innerText = "A entrada não pode ser maior que o valor com desconto.";
+                return;
+            }
+            const valorAFinanciar = valorComDesconto - entrada;
+            if (valorAFinanciar <= 0) {
+                elError.innerText = "O valor a financiar deve ser maior que zero.";
+                return;
+            }
+            const valorParcela = valorAFinanciar * fator;
+
+            // Salvar os valores para uso na Calculadora de Desconto
+            sessionStorage.setItem("valor-produto", valor.toString());
+            sessionStorage.setItem("valor-entrada", entrada.toString());
+            sessionStorage.setItem("numero-parcelas", parcelas);
+            sessionStorage.setItem("valor-parcela-calculado", valorParcela.toString());
+
+            const texto = 
+            `P.Livro: R$ ${formatarMoeda(valor)}\n` +
+            `Total Livro: R$ ${formatarMoeda(valorComDesconto)}\n` +
+            `Desconto: R$ ${formatarMoeda(valorDesconto)} (${descontoPercentual}%)\n` +
+            `Entrada: R$ ${formatarMoeda(entrada)}\n` +
+            `Plano:${parcelas}x de R$ ${formatarMoeda(valorParcela)}\n` +
+            `Finac: R$ ${formatarMoeda(valorParcela * parcelas + entrada - valorComDesconto)}\n` +
+            `Valor Total: R$ ${formatarMoeda(valorParcela * parcelas + entrada)}`;
+        elResultado.innerText = texto;
+    
+        // Exibe as informações adicionais
+        const totalParcelas = valorParcela * parseInt(parcelas);
+        elInfo.innerText = `Fator usado: ${fator.toFixed(3)} | ${parcelas} x ${formatarMoeda(valorParcela)} = ${formatarMoeda(totalParcelas)}`;
+    
+        sessionStorage.setItem("resultado-parcelamento", texto);
     }
-};
-</script>
+
+        // Limpa os resultados da Calculadora de Parcelas
+        function limparResultadoParcelamento() {
+            const elResultado = document.getElementById("resultado-parcelamento");
+            const elInfo = document.getElementById("info-parcelamento");
+            const elError = document.getElementById("error-parcelamento");
+            if (elResultado) elResultado.innerText = "";
+            if (elInfo) elInfo.innerText = "";
+            if (elError) elError.innerText = "";
+            sessionStorage.removeItem("resultado-parcelamento");
+        }
+
+        // Limpa todos os campos da Calculadora de Parcelas
+        function limparParcelamento() {
+            const valorInput = document.getElementById("valor");
+            const entradaInput = document.getElementById("entrada-parcelamento");
+            const descontoPercentualInput = document.getElementById("desconto-percentual");
+            const parcelasInput = document.getElementById("parcelas");
+            if (valorInput) valorInput.value = "";
+            if (entradaInput) entradaInput.value = "";
+            if (descontoPercentualInput) descontoPercentualInput.value = "";
+            if (parcelasInput) parcelasInput.value = "";
+            limparResultadoParcelamento();
+        }
+
+        // Copia o resultado da Calculadora de Parcelas para a área de transferência
+        function copiarResultadoParcelamento() {
+            const elResultado = document.getElementById("resultado-parcelamento");
+            const elInfo = document.getElementById("info-parcelamento");
+            const elError = document.getElementById("error-parcelamento");
+
+            if (!elResultado || !elInfo || !elError) {
+                console.error("Um ou mais elementos DOM não foram encontrados em copiarResultadoParcelamento.");
+                alert("Erro: Elementos da página não encontrados.");
+                return;
+            }
+
+            const resultado = elResultado.innerText;
+            const info = elInfo.innerText;
+            if (!resultado) {
+                elError.innerText = "Nenhum resultado disponível para copiar.";
+                return;
+            }
+            const texto = `${info}\n${resultado}`;
+            navigator.clipboard.writeText(texto).then(() => {
+                alert("Resultado copiado para a área de transferência!");
+            }).catch(() => {
+                elError.innerText = "Erro ao copiar o resultado.";
+            });
+        }
+
+        // Envia o resultado da Calculadora de Parcelas via WhatsApp
+        function enviarWhatsAppParcelamento() {
+            const valorInput = document.getElementById("valor");
+            const entradaInput = document.getElementById("entrada-parcelamento");
+            const descontoPercentualInput = document.getElementById("desconto-percentual");
+            const parcelasInput = document.getElementById("parcelas");
+            const elError = document.getElementById("error-parcelamento");
+
+            if (!valorInput || !entradaInput || !descontoPercentualInput || !parcelasInput || !elError) {
+                console.error("Um ou mais elementos DOM não foram encontrados em enviarWhatsAppParcelamento.");
+                alert("Erro: Elementos da página não encontrados.");
+                return;
+            }
+
+            const valor = parseFloat(valorInput.value);
+            const entradaValue = entradaInput.value.trim();
+            const entrada = entradaValue === "" ? 0 : parseFloat(entradaValue);
+            const descontoPercentualValue = descontoPercentualInput.value.trim();
+            const descontoPercentual = descontoPercentualValue === "" ? 0 : parseFloat(descontoPercentualValue);
+            const parcelas = parcelasInput.value;
+            const fator = fatores[parcelas];
+
+            if (!valor || isNaN(valor) || valor <= 0) {
+                elError.innerText = "Insira um valor do produto válido (maior que 0).";
+                return;
+            }
+            if (isNaN(entrada) || entrada < 0) {
+                elError.innerText = "O valor da entrada não pode ser negativo.";
+                return;
+            }
+            if (isNaN(descontoPercentual) || descontoPercentual < 0) {
+                elError.innerText = "O percentual de desconto não pode ser negativo.";
+                return;
+            }
+            if (descontoPercentual > 100) {
+                elError.innerText = "O percentual de desconto não pode exceder 100%.";
+                return;
+            }
+            if (!parcelas || !fator) {
+                elError.innerText = "Selecione um número válido de parcelas.";
+                return;
+            }
+
+            const valorDesconto = valor * (descontoPercentual / 100);
+            const valorComDesconto = valor - valorDesconto;
+            if (entrada > valorComDesconto) {
+                elError.innerText = "A entrada não pode ser maior que o valor com desconto.";
+                return;
+            }
+            const valorAFinanciar = valorComDesconto - entrada;
+            if (valorAFinanciar <= 0) {
+                elError.innerText = "O valor a financiar deve ser maior que zero.";
+                return;
+            }
+            const valorParcela = valorAFinanciar * fator;
+
+            const textoResumo = `P.Livro: R$ ${formatarMoeda(valor)}\n` +
+                                `Total Livro: R$ ${formatarMoeda(valorComDesconto)}\n` +
+                                `Desconto: R$ ${formatarMoeda(valorDesconto)} (${descontoPercentual}%)\n` +
+                                `Entrada: R$ ${formatarMoeda(entrada)}\n` +
+                                `${parcelas}x de R$ ${formatarMoeda(valorParcela)}\n` +
+                                `Finac: R$ ${formatarMoeda(valorParcela * parcelas + entrada - valorComDesconto)}\n` +
+                                `Valor Total: R$ ${formatarMoeda(valorParcela * parcelas + entrada)}`;
+                                const textoInfo =  `Fator usado: ${fator.toFixed(3)} | ${parcelas} x ${formatarMoeda(valorParcela)}= ${formatarMoeda(valorParcela * parseInt(parcelas))}`;
+
+            const texto = `Olá! Sua Simulação de Parcelamento:\n\n` +
+                          `${textoInfo}\n\n` +
+                          `${textoResumo}\n\n` +
+                          `Consultora: *Marta Alves*`;
+            const numero = "5599992172611";
+            window.open(`https://wa.me/${numero}?text=${encodeURIComponent(texto)}`, "_blank");
+        }
+
+        // Calcula o desconto com base no valor presente de uma anuidade com juros compostos
+        function calcularDesconto() {
+            const produtoInput = document.getElementById("produto");
+            const entradaInput = document.getElementById("entrada");
+            const parcelaSelectInput = document.getElementById("parcela-select");
+            const valorParcelaInput = document.getElementById("valor-parcela");
+            const elResultado = document.getElementById("resultado-desconto");
+            const elInfo = document.getElementById("desconto-info");
+            const elError = document.getElementById("error-desconto");
+
+            if (!produtoInput || !entradaInput || !parcelaSelectInput || !valorParcelaInput || !elResultado || !elInfo || !elError) {
+                console.error("Um ou mais elementos DOM não foram encontrados em calcularDesconto.");
+                alert("Erro: Elementos da página não encontrados.");
+                return;
+            }
+
+            elError.innerText = "";
+            const produto = parseFloat(produtoInput.value);
+            const entradaValue = entradaInput.value.trim();
+            const entrada = entradaValue === "" ? 0 : parseFloat(entradaValue);
+            const parcelaSelect = parcelaSelectInput.value;
+            const valorParcela = parseFloat(valorParcelaInput.value);
+
+            if (!produto || isNaN(produto) || produto <= 0) {
+                elError.innerText = "Insira um valor total válido (maior que 0).";
+                return;
+            }
+            if (isNaN(entrada) || entrada < 0) {
+                elError.innerText = "O valor da entrada não pode ser negativo.";
+                return;
+            }
+            if (entrada >= produto) {
+                elError.innerText = "A entrada deve ser menor que o valor total.";
+                return;
+            }
+            if (!parcelaSelect || !taxas[parcelaSelect]) {
+                elError.innerText = "Selecione um número válido de parcelas.";
+                return;
+            }
+            if (!valorParcela || isNaN(valorParcela) || valorParcela <= 0) {
+                elError.innerText = "Insira um valor de parcela válido (maior que 0).";
+                return;
+            }
+
+            const valorFinanciado = produto - entrada;
+            const taxa = taxas[parcelaSelect] / 100;
+            const n = parseInt(parcelaSelect);
+            let pv;
+            try {
+                pv = valorParcela * ((1 - Math.pow(1 + taxa, -n)) / taxa);
+            } catch (e) {
+                elError.innerText = "Erro no cálculo: taxa inválida.";
+                console.error("Erro no cálculo do valor presente:", e);
+                return;
+            }
+
+            const desconto = valorFinanciado - pv;
+            if (desconto <= 0 || isNaN(desconto)) {
+                elResultado.innerText = "Desconto inválido.";
+                elInfo.innerText = "";
+                elError.innerText = "O cálculo resultou em um desconto inválido. Verifique os valores inseridos.";
+            } else {
+                elResultado.innerText = `Desconto: R$ ${formatarMoeda(desconto)}`;
+                elInfo.innerText = `Valor financiado: R$ ${formatarMoeda(valorFinanciado)} | Taxa: ${taxas[parcelaSelect]}%`;
+                sessionStorage.setItem("resultado-desconto", `Desconto: R$ ${formatarMoeda(desconto)}`);
+                sessionStorage.setItem("desconto-info", `Valor financiado: R$ ${formatarMoeda(valorFinanciado)} | Taxa: ${taxas[parcelaSelect]}% `);
+            }
+        }
+
+        // Copia o resultado do desconto para a área de transferência
+        function copiarResultadoDesconto() {
+            const elResultado = document.getElementById("resultado-desconto");
+            const elInfo = document.getElementById("desconto-info");
+            const elError = document.getElementById("error-desconto");
+
+            if (!elResultado || !elInfo || !elError) {
+                console.error("Um ou mais elementos DOM não foram encontrados em copiarResultadoDesconto.");
+                alert("Erro: Elementos da página não encontrados.");
+                return;
+            }
+
+            const resultado = elResultado.innerText;
+            const info = elInfo.innerText;
+            if (!resultado) {
+                elError.innerText = "Nenhum resultado disponível para copiar.";
+                return;
+            }
+            const texto = `${resultado}\n${info}`;
+            navigator.clipboard.writeText(texto).then(() => {
+                alert("Resultado copiado para a área de transferência!");
+            }).catch(() => {
+                elError.innerText = "Erro ao copiar o resultado.";
+            });
+        }
+
+        // Limpa os campos e resultados da Calculadora de Desconto
+        function limparDesconto() {
+            const produtoInput = document.getElementById("produto");
+            const entradaInput = document.getElementById("entrada");
+            const parcelaSelectInput = document.getElementById("parcela-select");
+            const valorParcelaInput = document.getElementById("valor-parcela");
+            const elResultado = document.getElementById("resultado-desconto");
+            const elInfo = document.getElementById("desconto-info");
+            const elError = document.getElementById("error-desconto");
+
+            if (produtoInput) produtoInput.value = "";
+            if (entradaInput) entradaInput.value = "";
+            if (parcelaSelectInput) parcelaSelectInput.value = "";
+            if (valorParcelaInput) valorParcelaInput.value = "";
+            if (elResultado) elResultado.innerText = "";
+            if (elInfo) elInfo.innerText = "";
+            if (elError) elError.innerText = "";
+            sessionStorage.removeItem("resultado-desconto");
+            sessionStorage.removeItem("desconto-info");
+        }
+
+        // Envia o resultado da Calculadora de Desconto via WhatsApp
+        function enviarWhatsAppDesconto() {
+            const produtoInput = document.getElementById("produto");
+            const entradaInput = document.getElementById("entrada");
+            const parcelaSelectInput = document.getElementById("parcela-select");
+            const valorParcelaInput = document.getElementById("valor-parcela");
+            const elError = document.getElementById("error-desconto");
+
+            if (!produtoInput || !entradaInput || !parcelaSelectInput || !valorParcelaInput || !elError) {
+                console.error("Um ou mais elementos DOM não foram encontrados em enviarWhatsAppDesconto.");
+                alert("Erro: Elementos da página não encontrados.");
+                return;
+            }
+
+            const produto = parseFloat(produtoInput.value);
+            const entradaValue = entradaInput.value.trim();
+            const entrada = entradaValue === "" ? 0 : parseFloat(entradaValue);
+            const parcelaSelect = parcelaSelectInput.value;
+            const valorParcela = parseFloat(valorParcelaInput.value);
+
+            if (!produto || isNaN(produto) || produto <= 0) {
+                elError.innerText = "Insira um valor total válido (maior que 0).";
+                return;
+            }
+            if (isNaN(entrada) || entrada < 0) {
+                elError.innerText = "O valor da entrada não pode ser negativo.";
+                return;
+            }
+            if (entrada >= produto) {
+                elError.innerText = "A entrada deve ser menor que o valor total.";
+                return;
+            }
+            if (!parcelaSelect || !taxas[parcelaSelect]) {
+                elError.innerText = "Selecione um número válido de parcelas.";
+                return;
+            }
+            if (!valorParcela || isNaN(valorParcela) || valorParcela <= 0) {
+                elError.innerText = "Insira um valor de parcela válido (maior que 0).";
+                return;
+            }
+
+            const valorFinanciado = produto - entrada;
+            const taxa = taxas[parcelaSelect] / 100;
+            const n = parseInt(parcelaSelect);
+            const pv = valorParcela * ((1 - Math.pow(1 + taxa, -n)) / taxa);
+            const desconto = valorFinanciado - pv;
+            const texto = `Simulação de Desconto:\n\n` +
+            `Valor total: R$ ${formatarMoeda(produto)}\n` +
+            `Entrada: R$ ${formatarMoeda(entrada)}\n` +
+            `Parcelas: ${parcelaSelect}x de R$ ${formatarMoeda(valorParcela)}\n` +
+            `Desconto: R$ ${formatarMoeda(desconto)}\n` +
+            `Valor presente: R$ ${formatarMoeda(pv)}\n` +
+            `Taxa: ${taxas[parcelaSelect]}%\n\n` +
+            `Valor financiado: R$ ${formatarMoeda(valorFinanciado)} | Taxa: ${taxas[parcelaSelect]}% | Valor presente: R$ ${formatarMoeda(pv)}\n\n` +
+            `Consultora: *Marta Alves*`;
+const numero = "5599992172611";
+window.open(`https://wa.me/${numero}?text=${encodeURIComponent(texto)}`, "_blank");
+}
+        // Alterna para a Calculadora de Desconto
+        function mostrarDesconto() {
+            const calculadoraBloco = document.getElementById("calculadora-bloco");
+            const descontoBloco = document.getElementById("desconto-bloco");
+            const produtoInput = document.getElementById("produto");
+            const entradaInput = document.getElementById("entrada");
+            const parcelaSelectInput = document.getElementById("parcela-select");
+            const valorParcelaInput = document.getElementById("valor-parcela");
+
+            if (!calculadoraBloco || !descontoBloco || !produtoInput || !entradaInput || !parcelaSelectInput || !valorParcelaInput) {
+                console.error("Um ou mais elementos DOM não foram encontrados em mostrarDesconto.");
+                return;
+            }
+
+            // Preencher os campos com os valores salvos, se disponíveis
+            const valorProdutoSalvo = sessionStorage.getItem("valor-produto");
+            const valorEntradaSalvo = sessionStorage.getItem("valor-entrada");
+            const numeroParcelasSalvo = sessionStorage.getItem("numero-parcelas");
+            const valorParcelaCalculado = sessionStorage.getItem("valor-parcela-calculado");
+
+            if (valorProdutoSalvo && !produtoInput.value) {
+                produtoInput.value = parseFloat(valorProdutoSalvo).toFixed(2);
+            }
+            if (valorEntradaSalvo && !entradaInput.value) {
+                entradaInput.value = parseFloat(valorEntradaSalvo).toFixed(2);
+            }
+            if (numeroParcelasSalvo && !parcelaSelectInput.value) {
+                parcelaSelectInput.value = numeroParcelasSalvo;
+            }
+            if (valorParcelaCalculado && !valorParcelaInput.value) {
+                valorParcelaInput.value = parseFloat(valorParcelaCalculado).toFixed(2);
+            }
+
+            calculadoraBloco.style.display = "none";
+            descontoBloco.style.display = "block";
+            setTimeout(() => {
+                descontoBloco.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 100);
+
+            // Executar cálculo automático após preencher os campos
+            if (valorProdutoSalvo && valorEntradaSalvo && numeroParcelasSalvo && valorParcelaCalculado) {
+                calcularDesconto();
+            }
+        }
+
+        // Alterna para a Calculadora de Parcelas
+        function mostrarParcelas() {
+            const descontoBloco = document.getElementById("desconto-bloco");
+            const calculadoraBloco = document.getElementById("calculadora-bloco");
+            if (!descontoBloco || !calculadoraBloco) {
+                console.error("Um ou mais elementos DOM não foram encontrados em mostrarParcelas.");
+                return;
+            }
+            descontoBloco.style.display = "none";
+            calculadoraBloco.style.display = "block";
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        // Inicialização da página
+        window.onload = () => {
+            preencherParcelas();
+
+// Adiciona eventos de input com debounce para cálculo automático
+            const campos = ["valor", "entrada-parcelamento", "desconto-percentual", "parcelas"];
+            campos.forEach(id => {
+                const element = document.getElementById(id);
+                if (!element) {
+                    console.error(`Elemento com ID '${id}' não encontrado.`);
+                    return;
+                }
+                element.addEventListener("input", () => {
+                    clearTimeout(element.debounceTimeout);
+                    element.debounceTimeout = setTimeout(calcularParcelamento, 300);
+                });
+            });
+
+            const descontoCampos = ["produto", "entrada", "parcela-select", "valor-parcela"];
+            descontoCampos.forEach(id => {
+                const element = document.getElementById(id);
+                if (!element) {
+                    console.error(`Elemento com ID '${id}' não encontrado.`);
+                    return;
+                }
+                element.addEventListener("input", () => {
+                    clearTimeout(element.debounceTimeout);
+                    element.debounceTimeout = setTimeout(calcularDesconto, 300);
+                });
+            });
+
+// Restaura resultados salvos
+            const salvo = sessionStorage.getItem("resultado-parcelamento");
+            const elResultado = document.getElementById("resultado-parcelamento");
+            const elInfo = document.getElementById("info-parcelamento");
+            if (salvo && elResultado) elResultado.innerText = salvo;
+
+            const descontoSalvo = sessionStorage.getItem("resultado-desconto");
+            const descontoInfoSalvo = sessionStorage.getItem("desconto-info");
+            const elResultadoDesconto = document.getElementById("resultado-desconto");
+            const elDescontoInfo = document.getElementById("desconto-info");
+            if (descontoSalvo && elResultadoDesconto) elResultadoDesconto.innerText = descontoSalvo;
+            if (descontoInfoSalvo && elDescontoInfo) elDescontoInfo.innerText = descontoInfoSalvo;
+
+            const descontoBloco = document.getElementById("desconto-bloco");
+            const calculadoraBloco = document.getElementById("calculadora-bloco");
+            if (descontoBloco && calculadoraBloco) {
+                descontoBloco.style.display = "none";
+                calculadoraBloco.style.display = "block";
+            }
+        };
+    </script>
 </body>
 </html>
