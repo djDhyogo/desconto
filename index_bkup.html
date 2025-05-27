@@ -324,14 +324,14 @@ function calcularParcelamento() {
         `Total Livro: R$ ${formatarMoeda(valorComDesconto)}\n` +
         `Desconto: R$ ${formatarMoeda(valorDesconto)} (${descontoPercentual}%)\n` +
         `Entrada: R$ ${formatarMoeda(entrada)}\n` +
-        `${parcelas}x de R$ ${formatarMoeda(valorParcela)}\n` +
+        `Plano:${parcelas}x de R$ ${formatarMoeda(valorParcela)}\n` +
         `Finac: R$ ${formatarMoeda(valorParcela * parcelas + entrada - valorComDesconto)}\n` +
         `Valor Total: R$ ${formatarMoeda(valorParcela * parcelas + entrada)}`;
     elResultado.innerText = texto;
 
     // Exibe as informações adicionais
     const totalParcelas = valorParcela * parseInt(parcelas);
-    elInfo.innerText = `Fator usado: ${fator.toFixed(6)} | ${parcelas} x parcela = ${formatarMoeda(totalParcelas)}`;
+    elInfo.innerText = `Fator usado: ${fator.toFixed(3)} | ${parcelas} x ${formatarMoeda(valorParcela)} = ${formatarMoeda(totalParcelas)}`;
 
     sessionStorage.setItem("resultado-parcelamento", texto);
 }
@@ -450,7 +450,7 @@ function enviarWhatsAppParcelamento() {
                         `${parcelas}x de R$ ${formatarMoeda(valorParcela)}\n` +
                         `Finac: R$ ${formatarMoeda(valorParcela * parcelas + entrada - valorComDesconto)}\n` +
                         `Valor Total: R$ ${formatarMoeda(valorParcela * parcelas + entrada)}`;
-    const textoInfo = `Fator usado: ${fator.toFixed(6)} | ${parcelas} x parcela = ${formatarMoeda(valorParcela * parseInt(parcelas))}`;
+    const textoInfo =  `Fator usado: ${fator.toFixed(3)} | ${parcelas} x ${formatarMoeda(valorParcela)}= ${formatarMoeda(valorParcela * parseInt(parcelas))}`;
 
     const texto = `Olá! Sua Simulação de Parcelamento:\n\n` +
                   `${textoInfo}\n\n` +
@@ -523,9 +523,9 @@ function calcularDesconto() {
         elError.innerText = "O cálculo resultou em um desconto inválido. Verifique os valores inseridos.";
     } else {
         elResultado.innerText = `Desconto: R$ ${formatarMoeda(desconto)}`;
-        elInfo.innerText = `Valor financiado: R$ ${formatarMoeda(valorFinanciado)} | Taxa: ${taxas[parcelaSelect]}% | Valor presente: R$ ${formatarMoeda(pv)}`;
+        elInfo.innerText = `Valor financiado: R$ ${formatarMoeda(valorFinanciado)} | Taxa: ${taxas[parcelaSelect]}%`;
         sessionStorage.setItem("resultado-desconto", `Desconto: R$ ${formatarMoeda(desconto)}`);
-        sessionStorage.setItem("desconto-info", `Valor financiado: R$ ${formatarMoeda(valorFinanciado)} | Taxa: ${taxas[parcelaSelect]}% | Valor presente: R$ ${formatarMoeda(pv)}`);
+        sessionStorage.setItem("desconto-info", `Valor financiado: R$ ${formatarMoeda(valorFinanciado)} | Taxa: ${taxas[parcelaSelect]}% `);
     }
 }
 
